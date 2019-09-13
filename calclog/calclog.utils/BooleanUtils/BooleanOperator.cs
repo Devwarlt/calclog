@@ -1,6 +1,6 @@
 ﻿namespace calclog.utils.BooleanUtils
 {
-    public enum BooleanOperators
+    public enum BooleanOperator
     {
         Negation,
         Conjunction,

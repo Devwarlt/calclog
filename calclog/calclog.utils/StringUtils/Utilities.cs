@@ -1,5 +1,4 @@
-﻿using calclog.utils.BooleanUtils;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace calclog.utils.StringUtils
@@ -9,13 +8,19 @@ namespace calclog.utils.StringUtils
         public static string Filter(this string expression, string pattern, string replacement)
             => Regex.Replace(expression, pattern, replacement);
 
-        public static Premise[] GetPremises(this string expression)
-            => expression.Filter("[^a-z]", string.Empty).Select(premise => new Premise() { name = premise, value = null }).ToArray();
-
-        public static bool GenerateTruthTable(string expression)
+        public static Dictionary<char, List<int>> GetPremises(this string expression)
         {
-            var premises = expression.GetPremises();
-            var numberOfPremises = premises.Length;
+            var premises = new Dictionary<char, List<int>>();
+
+            for (var i = 0; i < expression.Filter("[^a-z]", ".").Length; i++)
+                if (expression[i] == '.') continue;
+                else
+                {
+                    if (premises.ContainsKey(expression[i])) premises[expression[i]].Add(i);
+                    else premises.Add(expression[i], new List<int>() { i });
+                }
+
+            return premises;
         }
     }
 }

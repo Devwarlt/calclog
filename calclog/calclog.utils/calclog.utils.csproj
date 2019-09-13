@@ -41,16 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BooleanOperations\BooleanOperator.Biconditional.cs" />
-    <Compile Include="BooleanOperations\BooleanOperator.Conditional.cs" />
-    <Compile Include="BooleanOperations\BooleanOperator.Conjunction.cs" />
-    <Compile Include="BooleanOperations\BooleanOperator.Disjunction.cs" />
-    <Compile Include="BooleanOperations\BooleanOperator.ExclusiveDisjunction.cs" />
-    <Compile Include="BooleanOperations\BooleanOperator.Negation.cs" />
-    <Compile Include="BooleanUtils\Operators.cs" />
-    <Compile Include="BooleanOperations\IBooleanOperator.cs" />
-    <Compile Include="BooleanUtils\Premise.cs" />
+    <Compile Include="BooleanUtils\BooleanOperations.cs" />
+    <Compile Include="BooleanUtils\BooleanOperator.cs" />
     <Compile Include="BooleanUtils\Proposition.cs" />
+    <Compile Include="BooleanUtils\PropositionFlag.cs" />
+    <Compile Include="BooleanUtils\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringUtils\Utilities.cs" />
   </ItemGroup>
