@@ -5,14 +5,26 @@ namespace calclog.utils.StringUtils
 {
     public static class Utilities
     {
-        public static string Filter(this string expression, string pattern, string replacement)
+        /// <summary>
+        /// Filter an expression based on a <see cref="Regex"/> expression.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="pattern"></param>
+        /// <param name="replacement"></param>
+        /// <returns></returns>
+        public static string filter(this string expression, string pattern, string replacement)
             => Regex.Replace(expression, pattern, replacement);
 
-        public static Dictionary<char, List<int>> GetPremises(this string expression)
+        /// <summary>
+        /// Gets all premisses from an expression.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static Dictionary<char, List<int>> getPremises(this string expression)
         {
             var premises = new Dictionary<char, List<int>>();
 
-            for (var i = 0; i < expression.Filter("[^a-z]", ".").Length; i++)
+            for (var i = 0; i < expression.filter("[^a-z]", ".").Length; i++)
                 if (expression[i] == '.') continue;
                 else
                 {
