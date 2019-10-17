@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "calclog.utils", "calclog.ut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "calclog.terminal", "calclog.terminal\calclog.terminal.csproj", "{6D7EE932-73D1-4533-A868-4D0EBAAC833E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "main", "main", "{FACF8CEE-CCD4-4503-9266-51F2F7859BF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{53F8406A-76D9-446E-9D39-AC9CD0328616}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{26BE0ABC-8779-49D9-9A30-5A65EE1899D8} = {FACF8CEE-CCD4-4503-9266-51F2F7859BF7}
+		{17021C02-AE67-477B-A6FE-EB54163C8B92} = {53F8406A-76D9-446E-9D39-AC9CD0328616}
+		{6D7EE932-73D1-4533-A868-4D0EBAAC833E} = {FACF8CEE-CCD4-4503-9266-51F2F7859BF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0495B2A7-E11F-4717-801B-96D91FB1D776}
