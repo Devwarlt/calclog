@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "calclog", "calclog.terminal\calclog.csproj", "{6D7EE932-73D1-4533-A868-4D0EBAAC833E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "calclog", "calclog\calclog.csproj", "{6D7EE932-73D1-4533-A868-4D0EBAAC833E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{FACF8CEE-CCD4-4503-9266-51F2F7859BF7}"
 EndProject
