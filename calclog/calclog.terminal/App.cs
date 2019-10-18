@@ -1,14 +1,16 @@
-﻿using System;
+﻿using calclog.Calculator;
+using System;
 using System.Globalization;
+using System.Text;
 using System.Threading;
 
-namespace calclog.terminal
+namespace calclog
 {
-    // https://www.geeksforgeeks.org/evaluate-a-boolean-expression-represented-as-string/
     public static class App
     {
+        public static Log log = new Log(typeof(App));
         private static readonly ManualResetEvent shutdown = new ManualResetEvent(false);
-        private static Thread handler;
+        private static CalculatorHandler calculator;
 
         private static void Main()
         {
@@ -16,33 +18,19 @@ namespace calclog.terminal
             Thread.CurrentThread.Name = "Entry";
 
             Console.Title = "calclog - Terminal";
+            Console.InputEncoding = Encoding.UTF8;
 
-            handler = new Thread(ConsoleHandler);
-            handler.Start();
+            calculator = new CalculatorHandler();
+            calculator.configureKeys();
+            calculator.startThread();
 
             Console.CancelKeyPress += delegate { shutdown.Set(); };
 
             shutdown.WaitOne();
 
-            handler.Abort();
+            calculator.stopThread();
 
             Environment.Exit(0);
-        }
-
-        private static void ConsoleHandler()
-        {
-            Console.WriteLine("Type something...\n");
-
-            var input = Console.ReadLine();
-
-            Console.WriteLine("\n");
-            Console.WriteLine("Input: " + input);
-            Console.WriteLine("\n\n");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-            Console.Clear();
-
-            ConsoleHandler();
         }
     }
 }

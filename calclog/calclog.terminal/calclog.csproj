@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6D7EE932-73D1-4533-A868-4D0EBAAC833E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>calclog.terminal</RootNamespace>
-    <AssemblyName>calclog.terminal</AssemblyName>
+    <RootNamespace>calclog</RootNamespace>
+    <AssemblyName>calclog</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -44,10 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="BooleanUtils\BooleanOperation.cs" />
+    <Compile Include="BooleanUtils\BooleanOperator.cs" />
+    <Compile Include="Calculator\CalculatorHandler.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringUtils\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="References.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

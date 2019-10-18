@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BooleanUtils\BooleanOperation.cs" />
     <Compile Include="BooleanUtils\BooleanOperations.cs" />
     <Compile Include="BooleanUtils\BooleanOperator.cs" />
     <Compile Include="BooleanUtils\Proposition.cs" />
     <Compile Include="BooleanUtils\PropositionFlag.cs" />
-    <Compile Include="BooleanUtils\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringUtils\Utilities.cs" />
   </ItemGroup>

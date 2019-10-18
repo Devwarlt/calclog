@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace calclog.utils.StringUtils
+namespace calclog.StringUtils
 {
     public static class Utilities
     {
