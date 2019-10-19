@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>caclog.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,15 +48,23 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="BooleanUtils\BooleanOperation.cs" />
-    <Compile Include="BooleanUtils\BooleanOperator.cs" />
+    <Compile Include="BooleanUtils\BooleanOperations.cs" />
+    <Compile Include="BooleanUtils\TruthTable.cs" />
     <Compile Include="Calculator\CalculatorHandler.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="Log\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringUtils\Utilities.cs" />
+    <Compile Include="ShuntingYardAlgorithm\BooleanExpression.cs" />
+    <Compile Include="ShuntingYardAlgorithm\BooleanItem.cs" />
+    <Compile Include="ShuntingYardAlgorithm\BooleanSymbol.cs" />
+    <Compile Include="ShuntingYardAlgorithm\Token.cs" />
+    <Compile Include="StringUtils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="References.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="caclog.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

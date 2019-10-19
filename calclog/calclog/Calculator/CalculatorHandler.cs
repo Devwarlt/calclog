@@ -1,4 +1,5 @@
 ﻿using calclog.BooleanUtils;
+using calclog.ShuntingYardAlgorithm;
 using calclog.StringUtils;
 using System;
 using System.Collections.Generic;
@@ -8,37 +9,109 @@ using static calclog.App;
 
 namespace calclog.Calculator
 {
-    using bo = BooleanOperator;
+    using bi = BooleanItem;
+    using bs = BooleanSymbol;
     using ck = ConsoleKey;
     using cs = Console;
 
+    /// <summary>
+    /// Represents a class to manage all features of calclog.
+    /// </summary>
     public sealed class CalculatorHandler
     {
-        private Dictionary<bo, BooleanOperation> operatorActions;
-        private Dictionary<ck, char> extraActions;
+        /// <summary>
+        /// Allowed keys on <see cref="cs"/>.
+        /// </summary>
         private List<ck> allowedKeys;
-        private List<ck> letterKeys;
-        private List<ck> optionKeys;
+
+        /// <summary>
+        /// Allowed deletion keys at <see cref="cs"/>.
+        /// </summary>
         private List<ck> deletionKeys;
-        private List<ck> parenthesisKeys;
+
+        /// <summary>
+        /// Allowed execution key at <see cref="cs"/>.
+        /// </summary>
         private ck executionKey;
-        private Thread thread { get; }
+
+        /// <summary>
+        /// Represents an input that will be converted into a valid boolean
+        /// expression throught <see cref="handleExecution"/> invoke.
+        /// </summary>
         private string expression = string.Empty;
+
+        /// <summary>
+        /// An extra dictionary of valid actions along invoke on <see cref="cs"/>.
+        /// </summary>
+        private Dictionary<ck, char> extraActions;
+
+        /// <summary>
+        /// Represents a variable if <see cref="expression"/> contains
+        /// parenthesis.
+        /// </summary>
         private bool hasParenthesis = false;
+
+        /// <summary>
+        /// Represents a variable if <see cref="expression"/> has
+        /// missing parenthesis, this alog has dependency with <see cref="hasParenthesis"/>
+        /// property.
+        /// </summary>
         private bool isMissingParenthesis = false;
 
-        public CalculatorHandler() => thread = new Thread(handleCalculator);
+        /// <summary>
+        /// Allowed keys for letters at <see cref="cs"/>.
+        /// </summary>
+        private List<ck> letterKeys;
 
+        /// <summary>
+        /// A dictionary of valid operators and actions along invoke on <see cref="cs"/>.
+        /// </summary>
+        private Dictionary<bi, BooleanOperation> operatorActions;
+
+        /// <summary>
+        /// Allowed options keys at <see cref="cs"/>.
+        /// </summary>
+        private List<ck> optionKeys;
+
+        /// <summary>
+        /// Allowed parenthesis keys at <see cref="cs"/>.
+        /// </summary>
+        private List<ck> parenthesisKeys;
+
+        /// <summary>
+        /// Represents a truth-table instance.
+        /// </summary>
+        private TruthTable truthTable;
+
+        public CalculatorHandler()
+        {
+            truthTable = new TruthTable();
+            thread = new Thread(handleCalculator);
+        }
+
+        /// <summary>
+        /// Internal thread responsible for <see cref="handleCalculator"/> method.
+        /// </summary>
+        private Thread thread { get; }
+
+        /// <summary>
+        /// Configure all keys that will be allowed at <see cref="cs"/>.
+        /// </summary>
         public void configureKeys()
         {
-            operatorActions = new Dictionary<bo, BooleanOperation>()
+            var operators = new Dictionary<bi, char>();
+
+            foreach (var (@char, item) in bs.expressionSymbols.Keys)
+                operators.Add(item, @char);
+
+            operatorActions = new Dictionary<bi, BooleanOperation>
             {
-                { bo.Negation, new BooleanOperation('\u00AC', new[] { ck.NumPad1, ck.D1 }, (exp) => negation(exp)) },
-                { bo.Conjunction, new BooleanOperation('^', new[] {  ck.NumPad2, ck.D2 }, (exp) => conjunction(exp)) },
-                { bo.Disjunction, new BooleanOperation('v', new[] { ck.NumPad3, ck.D3 }, (exp) => disjunction(exp)) },
-                { bo.ExclusiveDisjunction, new BooleanOperation('x', new[] { ck.NumPad4, ck.D4 }, (exp) => exclusiveDisjunction(exp)) },
-                { bo.Conditional, new BooleanOperation('\u2192', new[] { ck.NumPad5, ck.D5 }, (exp) => conditional(exp)) },
-                { bo.Biconditional, new BooleanOperation('\u2194', new[] { ck.NumPad6, ck.D6 }, (exp) => biconditional(exp)) }
+                { bi.NegationOperator, new BooleanOperation(operators[bi.NegationOperator], new[] { ck.NumPad1, ck.D1 }) },
+                { bi.ConjunctionOperator, new BooleanOperation(operators[bi.ConjunctionOperator], new[] {  ck.NumPad2, ck.D2 }) },
+                { bi.DisjunctionOperator, new BooleanOperation(operators[bi.DisjunctionOperator], new[] { ck.NumPad3, ck.D3 }) },
+                { bi.ExclusiveDisjunctionOperator, new BooleanOperation(operators[bi.ExclusiveDisjunctionOperator], new[] { ck.NumPad4, ck.D4 }) },
+                { bi.ConditionalOperator, new BooleanOperation(operators[bi.ConditionalOperator], new[] { ck.NumPad5, ck.D5 }) },
+                { bi.BiconditionalOperator, new BooleanOperation(operators[bi.BiconditionalOperator], new[] { ck.NumPad6, ck.D6 }) }
             };
 
             extraActions = new Dictionary<ck, char>()
@@ -69,80 +142,26 @@ namespace calclog.Calculator
             allowedKeys.Add(executionKey);
         }
 
+        /// <summary>
+        /// Gets <see cref="BooleanOperation"/> based on <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public BooleanOperation getOperation(ck key) => operatorActions.Values.First(op => op.keys.Contains(key));
 
-        private string negation(string exp)
-        {
-            // TODO.
-            return "negation operation";
-        }
-
-        private string conjunction(string exp)
-        {
-            // TODO.
-            return "conjunction operation";
-        }
-
-        private string disjunction(string exp)
-        {
-            // TODO.
-            return "disjunction operation";
-        }
-
-        private string exclusiveDisjunction(string exp)
-        {
-            // TODO.
-            return "exclusive disjunction operation";
-        }
-
-        private string conditional(string exp)
-        {
-            // TODO.
-            return "conditional operation";
-        }
-
-        private string biconditional(string exp)
-        {
-            // TODO.
-            return "biconditional operation";
-        }
-
-        private bool isEmpty(out int count)
-        {
-            count = -1;
-
-            if (string.IsNullOrEmpty(expression)) return true;
-
-            var filters = operatorActions.Values.Select(op => op.symbol).ToList();
-            filters.AddRange(extraActions.Values);
-
-            var filteredExpression = expression;
-
-            foreach (var filter in filters)
-                filteredExpression = filteredExpression.Replace(filter, '.');
-
-            var premisses = filteredExpression.getPremises();
-
-            count = premisses.Count;
-
-            return count == 0;
-        }
-
+        /// <summary>
+        /// Initialize <see cref="thread"/> process.
+        /// </summary>
         public void startThread() => thread.Start();
 
+        /// <summary>
+        /// Abort <see cref="thread"/> process.
+        /// </summary>
         public void stopThread() => thread.Abort();
 
-        private void displayTitle()
-            => log.info(
-@"
-            _      _
-   ___ __ _| | ___| | ___   __ _
-  / __/ _` | |/ __| |/ _ \ / _` |
- | (_| (_| | | (__| | (_) | (_| |
-  \___\__,_|_|\___|_|\___/ \__, |
-                           |___/
-");
-
+        /// <summary>
+        /// Display all valid options at <see cref="cs"/>.
+        /// </summary>
         private void displayOptions()
         {
             displayTitle();
@@ -184,6 +203,23 @@ namespace calclog.Calculator
                 ));
         }
 
+        /// <summary>
+        /// Display the ASCII art of calclog at <see cref="cs"/>.
+        /// </summary>
+        private void displayTitle()
+            => log.info(
+@"
+            _      _
+   ___ __ _| | ___| | ___   __ _
+  / __/ _` | |/ __| |/ _ \ / _` |
+ | (_| (_| | | (__| | (_) | (_| |
+  \___\__,_|_|\___|_|\___/ \__, |
+                           |___/
+");
+
+        /// <summary>
+        /// Main method responsible to invoke <see cref="handleKeys(ck)"/>.
+        /// </summary>
         private void handleCalculator()
         {
             displayOptions();
@@ -193,11 +229,40 @@ namespace calclog.Calculator
             handleKeys(readKey.Key);
         }
 
+        /// <summary>
+        /// Handle execution to convert <see cref="expression"/>
+        /// into a valid boolean expression via <see cref="truthTable"/>
+        /// methods and dependencies.
+        /// </summary>
+        private void handleExecution()
+        {
+            cs.Clear();
+
+            displayTitle();
+
+            if (!truthTable.handleExpression(expression))
+            {
+                handleCalculator();
+                return;
+            }
+
+            log.info("\n");
+            log.info("Press any key to continue...");
+            cs.ReadKey(true);
+            cs.Clear();
+
+            handleCalculator();
+        }
+
+        /// <summary>
+        /// Handle <see cref="ck"/> based on its own dependency.
+        /// </summary>
+        /// <param name="key"></param>
         private void handleKeys(ck key)
         {
             if (allowedKeys.Contains(key))
             {
-                if (letterKeys.Contains(key)) expression += key.ToString();
+                if (letterKeys.Contains(key)) expression += key.ToString().ToUpperInvariant();
                 if (optionKeys.Contains(key)) expression += getOperation(key).symbol;
                 if (deletionKeys.Contains(key) && !string.IsNullOrEmpty(expression))
                     expression = expression.Remove(expression.Length - 1);
@@ -207,7 +272,7 @@ namespace calclog.Calculator
 
                 if (executionKey == key)
                 {
-                    if (!isEmpty(out int count))
+                    if (!isEmpty())
                     {
                         if (hasParenthesis)
                         {
@@ -223,7 +288,7 @@ namespace calclog.Calculator
                                 return;
                             }
                         }
-                        handleExecution(count);
+                        handleExecution();
                         return;
                     }
                     else
@@ -248,6 +313,10 @@ namespace calclog.Calculator
             handleCalculator();
         }
 
+        /// <summary>
+        /// Handle parenthesis and variables <see cref="hasParenthesis"/> and
+        /// <see cref="isMissingParenthesis"/>.
+        /// </summary>
         private void handleParenthesis()
         {
             hasParenthesis = extraActions.Values
@@ -257,22 +326,23 @@ namespace calclog.Calculator
                 .Distinct().ToList().Count > 1;
         }
 
-        private void handleExecution(int count)
+        /// <summary>
+        /// Check if <see cref="expression"/> is empty or null.
+        /// </summary>
+        /// <returns></returns>
+        private bool isEmpty()
         {
-            cs.Clear();
+            if (string.IsNullOrEmpty(expression)) return true;
 
-            displayTitle();
+            var filters = operatorActions.Values.Select(op => op.symbol).ToList();
+            filters.AddRange(extraActions.Values);
 
-            log.warning(
-                string.Format("- Number of premisses: {0}\n- Number of results: {1}",
-                    count, Math.Pow(2, count)
-                ));
-            log.info("\n");
-            log.info("Press any key to continue...");
-            cs.ReadKey(true);
-            cs.Clear();
+            var filteredExpression = expression;
 
-            handleCalculator();
+            foreach (var filter in filters)
+                filteredExpression = filteredExpression.Replace(filter, '.');
+
+            return filteredExpression.getPremises().Count == 0;
         }
     }
 }

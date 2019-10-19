@@ -1,17 +1,16 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
-[assembly: AssemblyTitle("calclog.terminal")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("calclog")]
+[assembly: AssemblyDescription("This is a software to solve boolean expression via string inputs.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("calclog.terminal")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Projeção")]
+[assembly: AssemblyProduct("calclog")]
+[assembly: AssemblyCopyright("Copyright © Projeção 2019")]
+[assembly: AssemblyTrademark("calclog")]
 [assembly: AssemblyCulture("")]
 
 // Definir ComVisible como false torna os tipos neste assembly invisíveis
@@ -25,7 +24,7 @@ using System.Runtime.InteropServices;
 // As informações da versão de um assembly consistem nos quatro valores a seguir:
 //
 //      Versão Principal
-//      Versão Secundária 
+//      Versão Secundária
 //      Número da Versão
 //      Revisão
 //

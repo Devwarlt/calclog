@@ -1,4 +1,5 @@
 ﻿using calclog.Calculator;
+using calclog.Log;
 using System;
 using System.Globalization;
 using System.Text;
@@ -8,7 +9,8 @@ namespace calclog
 {
     public static class App
     {
-        public static Log log = new Log(typeof(App));
+        public static Logger log = new Logger(typeof(App));
+
         private static readonly ManualResetEvent shutdown = new ManualResetEvent(false);
         private static CalculatorHandler calculator;
 
